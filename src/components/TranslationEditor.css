@@ -240,12 +240,40 @@
   flex-direction: column;
 }
 
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
 .translate-button {
-  width: 100%;
+  flex: 1;
   padding: 15px;
   font-size: 16px;
   font-weight: 600;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.regenerate-button {
+  flex: 1;
+  padding: 15px;
+  font-size: 14px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #ff9800 0%, #f44336 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.regenerate-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
+}
+
+.regenerate-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .navigation-buttons {

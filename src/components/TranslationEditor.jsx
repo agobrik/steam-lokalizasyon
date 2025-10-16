@@ -33,7 +33,7 @@ function TranslationEditor({ file, translations, setTranslations, targetLanguage
     return matchesSearch && matchesFilter;
   });
 
-  const handleTranslateSingle = async () => {
+  const handleTranslateSingle = async (forceNew = false) => {
     if (!filteredTranslations[selectedIndex]) return;
 
     setIsTranslating(true);
@@ -42,16 +42,26 @@ function TranslationEditor({ file, translations, setTranslations, targetLanguage
     try {
       const item = filteredTranslations[selectedIndex];
 
-      // Translation memory'de var mı kontrol et
-      setTranslationStatus('Translation memory kontrol ediliyor...');
-      const cachedEntry = translationMemory.get(item.original, targetLanguage);
-
       let translation;
-      if (cachedEntry) {
-        setTranslationStatus('Önbellekten yükleniyor...');
-        translation = cachedEntry.translation;
-      } else {
-        setTranslationStatus('AI ile çevriliyor... (Bu işlem 10-30 saniye sürebilir)');
+
+      // forceNew true ise translation memory'yi atla
+      if (!forceNew) {
+        // Translation memory'de var mı kontrol et
+        setTranslationStatus('Translation memory kontrol ediliyor...');
+        const cachedEntry = translationMemory.get(item.original, targetLanguage);
+
+        if (cachedEntry) {
+          setTranslationStatus('Önbellekten yükleniyor...');
+          translation = cachedEntry.translation;
+        }
+      }
+
+      // Cache'te yoksa veya yeni alternatif isteniyorsa AI'dan çevir
+      if (!translation || forceNew) {
+        setTranslationStatus(forceNew ?
+          'Yeni alternatif üretiliyor... (Bu işlem 10-30 saniye sürebilir)' :
+          'AI ile çevriliyor... (Bu işlem 10-30 saniye sürebilir)'
+        );
 
         // Timeout ekle
         const timeoutPromise = new Promise((_, reject) =>
@@ -70,7 +80,7 @@ function TranslationEditor({ file, translations, setTranslations, targetLanguage
       newTranslations[originalIndex] = { ...item, translated: translation };
 
       setTranslations(newTranslations);
-      setTranslationStatus('Başarıyla tamamlandı!');
+      setTranslationStatus(forceNew ? 'Yeni alternatif oluşturuldu!' : 'Başarıyla tamamlandı!');
 
       // Başarı mesajını 2 saniye sonra temizle
       setTimeout(() => setTranslationStatus(''), 2000);
@@ -279,16 +289,29 @@ function TranslationEditor({ file, translations, setTranslations, targetLanguage
               </div>
 
               <div className="panel-actions">
-                <button
-                  onClick={handleTranslateSingle}
-                  disabled={isTranslating || ollamaStatus === 'offline'}
-                  className="translate-button"
-                >
-                  {isTranslating ? 'Çevriliyor...' : 'AI ile Çevir'}
-                </button>
+                <div className="action-buttons">
+                  <button
+                    onClick={() => handleTranslateSingle(false)}
+                    disabled={isTranslating || ollamaStatus === 'offline'}
+                    className="translate-button"
+                  >
+                    {isTranslating ? 'Çevriliyor...' : 'AI ile Çevir'}
+                  </button>
+
+                  {currentItem.translated && (
+                    <button
+                      onClick={() => handleTranslateSingle(true)}
+                      disabled={isTranslating || ollamaStatus === 'offline'}
+                      className="regenerate-button"
+                      title="Çeviriyi beğenmediyseniz yeni bir alternatif üretin"
+                    >
+                      🔄 Alternatif Üret
+                    </button>
+                  )}
+                </div>
 
                 {translationStatus && (
-                  <div className={`translation-status ${translationStatus.includes('HATA') ? 'error' : translationStatus.includes('Başarıyla') ? 'success' : 'info'}`}>
+                  <div className={`translation-status ${translationStatus.includes('HATA') ? 'error' : translationStatus.includes('Başarıyla') || translationStatus.includes('oluşturuldu') ? 'success' : 'info'}`}>
                     {translationStatus}
                   </div>
                 )}
