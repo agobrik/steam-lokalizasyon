@@ -1,0 +1,16 @@
+# Game Localization File
+MENU_START=Start Game
+MENU_LOAD=Load Game
+MENU_SETTINGS=Settings
+MENU_EXIT=Exit
+
+# Gameplay
+GAMEPLAY_HEALTH=Health
+GAMEPLAY_MANA=Mana
+GAMEPLAY_INVENTORY=Inventory
+GAMEPLAY_QUEST=Quest Log
+
+# Dialog
+DIALOG_GREETING=Hello, adventurer!
+DIALOG_FAREWELL=Safe travels!
+DIALOG_SHOP=Welcome to my shop. What can I get you?

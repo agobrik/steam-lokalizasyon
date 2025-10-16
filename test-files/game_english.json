@@ -1,0 +1,19 @@
+{
+  "menu": {
+    "start_game": "Start Game",
+    "load_game": "Load Game",
+    "settings": "Settings",
+    "exit": "Exit"
+  },
+  "gameplay": {
+    "health": "Health",
+    "mana": "Mana",
+    "inventory": "Inventory",
+    "quest_log": "Quest Log"
+  },
+  "dialog": {
+    "greeting": "Hello, adventurer!",
+    "farewell": "Safe travels!",
+    "shop_welcome": "Welcome to my shop. What can I get you?"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "menu": {
+    "start_game": "Oyuna Başla",
+    "load_game": "Oyun Yükle",
+    "settings": "Ayarlar",
+    "exit": "Çık"
+  },
+  "gameplay": {
+    "health": "Can",
+    "mana": "Mana",
+    "inventory": "Envanter",
+    "quest_log": "Görevler"
+  },
+  "dialog": {
+    "greeting": "Hoş geldin, macera arkadaşı!",
+    "farewell": "Güvenli yolculuklar!",
+    "shop_welcome": "Hoş geldin! Ne arıyorsun?"
+  }
+}

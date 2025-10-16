@@ -1,0 +1,15 @@
+"lang"
+{
+  "Tokens"
+  {
+    "MENU_START"		"Start Game"
+    "MENU_LOAD"		"Load Game"
+    "MENU_SETTINGS"		"Settings"
+    "MENU_EXIT"		"Exit"
+    "GAMEPLAY_HEALTH"		"Health"
+    "GAMEPLAY_MANA"		"Mana"
+    "GAMEPLAY_INVENTORY"		"Inventory"
+    "DIALOG_GREETING"		"Hello, adventurer!"
+    "DIALOG_FAREWELL"		"Safe travels!"
+  }
+}

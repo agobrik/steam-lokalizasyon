@@ -1,0 +1,89 @@
+{
+  "name": "steam-lokalizasyon",
+  "version": "1.0.0",
+  "description": "Steam oyunları için ücretsiz lokalizasyon desktop uygulaması",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:vite\" \"npm run dev:electron\"",
+    "dev:vite": "vite",
+    "dev:electron": "ping 127.0.0.1 -n 3 > nul && electron .",
+    "build": "vite build",
+    "build:win": "set CSC_IDENTITY_AUTO_DISCOVERY=false && npm run build && electron-builder --win --x64",
+    "build:portable": "set CSC_IDENTITY_AUTO_DISCOVERY=false && npm run build && electron-builder --win portable --x64",
+    "build:installer": "set CSC_IDENTITY_AUTO_DISCOVERY=false && npm run build && electron-builder --win nsis --x64",
+    "build:dir": "npm run build && electron-builder --dir",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "steam",
+    "localization",
+    "translation",
+    "ollama"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "concurrently": "^8.2.2",
+    "electron": "^28.1.0",
+    "electron-builder": "^24.9.1",
+    "electron-icon-builder": "^2.0.1",
+    "png-to-ico": "^3.0.1",
+    "vite": "^5.0.8",
+    "wait-on": "^7.2.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.5",
+    "better-sqlite3": "^9.2.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "build": {
+    "appId": "com.steamlokalizasyon.app",
+    "productName": "Steam Lokalizasyon",
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "build",
+      "output": "release"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icons/icon.ico",
+      "artifactName": "${productName}-${version}-${arch}.${ext}",
+      "signAndEditExecutable": false,
+      "signDlls": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "allowElevation": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Steam Lokalizasyon",
+      "installerIcon": "build/icons/icon.ico",
+      "uninstallerIcon": "build/icons/icon.ico",
+      "artifactName": "${productName}-Setup-${version}.${ext}",
+      "deleteAppDataOnUninstall": false
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-Portable.${ext}"
+    }
+  }
+}

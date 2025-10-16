@@ -1,0 +1,30 @@
+# Dependencies
+node_modules
+
+# Build outputs
+dist
+dist-electron
+release
+
+# Logs
+*.log
+
+# IDE
+.DS_Store
+.vscode
+.idea
+
+# Database
+*.db
+*.sqlite
+
+# Temporary files
+nul
+*.tmp
+convert-icon.js
+create-icon.ps1
+install.bat
+start.bat
+
+# Claude
+.claude
